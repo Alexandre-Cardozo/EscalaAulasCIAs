@@ -9,7 +9,6 @@ import {
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { getMonth, getYear, set } from "date-fns";
 import logo from "../assets/logo.jpeg";
@@ -28,11 +27,11 @@ const IOSSwitch = styled((props) => (
       transform: "translateX(16px)",
       color: "#fff",
       "& + .MuiSwitch-track": {
-        backgroundColor: "#c46565ff",
+        backgroundColor: "#65C466",
         opacity: 1,
         border: 0,
         ...theme.applyStyles("dark", {
-          backgroundColor: "#ca2e2eff",
+          backgroundColor: "#2ECA45",
         }),
       },
       "&.Mui-disabled + .MuiSwitch-track": {
@@ -40,7 +39,7 @@ const IOSSwitch = styled((props) => (
       },
     },
     "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#cf3333ff",
+      color: "#33cf4d",
       border: "6px solid #fff",
     },
     "&.Mui-disabled .MuiSwitch-thumb": {
@@ -74,9 +73,21 @@ const IOSSwitch = styled((props) => (
   },
 }));
 
-export default function Header({ meses, dataSelecionada, setDataSelecionada }) {
+export default function PageHeader({
+  meses,
+  dataSelecionada,
+  setDataSelecionada,
+  isBebesOn,
+  setIsBebesOn,
+}) {
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid
+      container
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ paddingLeft: 3, paddingRight: 3 }}
+    >
       <Typography variant="h5">Escala CIAs</Typography>
       <img src={logo} alt="Logo" width={50} height={50} />
       <Select
@@ -103,10 +114,16 @@ export default function Header({ meses, dataSelecionada, setDataSelecionada }) {
           )
         }
       />
-        <FormControlLabel
-          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-          label="Bebês"
-        />
+      <FormControlLabel
+        control={
+          <IOSSwitch
+            sx={{ m: 1 }}
+            checked={isBebesOn}
+            onChange={(e) => setIsBebesOn(e.target.checked)}
+          />
+        }
+        label="Bebês"
+      />
       <Button
         variant="contained"
         size="large"

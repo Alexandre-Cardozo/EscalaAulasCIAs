@@ -1,4 +1,5 @@
-import Header from "./components/Header.jsx";
+import PageHeader from "./components/PageHeader.jsx";
+import EscalaTable from "./components/EscalaTable.jsx";
 import { useState, useEffect } from "react";
 import { getMonth, getYear, getDaysInMonth, format } from "date-fns";
 
@@ -6,6 +7,7 @@ export default function App() {
   // --- O "Estado" (memória) do React ---
   const [dataSelecionada, setDataSelecionada] = useState(new Date());
   const [domingos, setDomingos] = useState([]);
+  const [isBebesOn, setIsBebesOn] = useState(true);
 
   // Nomes dos meses para o seletor
   const meses = [
@@ -47,12 +49,40 @@ export default function App() {
   }, [dataSelecionada]); // "Dependência": rode quando isso mudar
 
   return (
-    <div>
-      <Header
+    <>
+      <PageHeader
         meses={meses}
         dataSelecionada={dataSelecionada}
         setDataSelecionada={setDataSelecionada}
+        isBebesOn={isBebesOn}
+        setIsBebesOn={setIsBebesOn}
       />
-    </div>
+      {isBebesOn ? (
+        <EscalaTable
+          domingos={domingos}
+          cor="#65C466"
+          titulo="Bebês"
+          variant="bebes"
+        />
+      ) : null}
+      <EscalaTable
+        domingos={domingos}
+        cor="#FF746C"
+        titulo="Crianças"
+        variant="padrao"
+      />
+      <EscalaTable
+        domingos={domingos}
+        cor="#6c89ffff"
+        titulo="Intermediários"
+        variant="padrao"
+      />
+      <EscalaTable
+        domingos={domingos}
+        cor="#ffcc6cff"
+        titulo="Adolescentes"
+        variant="padrao"
+      />
+    </>
   );
 }
