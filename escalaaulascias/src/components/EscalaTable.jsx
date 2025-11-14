@@ -42,6 +42,8 @@ export default function EscalaTable({
   cor,
   titulo,
   variant = "padrao",
+  nomesTabela = [],
+  onChangeNome,
 }) {
   return (
     <Paper
@@ -65,7 +67,14 @@ export default function EscalaTable({
           sx={{ minWidth: 500, tableLayout: "fixed" }}
           aria-label="customized table"
         >
-          <TableHead sx={{ "& .MuiTableCell-head": { backgroundColor: cor } }}>
+          <TableHead
+            sx={{
+              "& .MuiTableCell-head": {
+                backgroundColor: cor,
+                borderTop: "5px solid #FFF",
+              },
+            }}
+          >
             <TableRow>
               <StyledTableCell
                 align="center"
@@ -84,7 +93,6 @@ export default function EscalaTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* Linhas (geradas dinamicamente) */}
             {domingos.map((data, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell
@@ -99,32 +107,34 @@ export default function EscalaTable({
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {data}
+                  {data ?? ""}
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
                     required
-                    id="outlined-required"
                     fullWidth
                     placeholder="Nome..."
                     variant="standard"
                     color={cor}
                     focused
+                    value={nomesTabela[index]?.[0] ?? ""}
+                    onChange={(e) => onChangeNome?.(index, 0, e.target.value)}
                   />
                 </StyledTableCell>
-                {variant === "bebes" ? null : (
+                {variant === "padrao" ? (
                   <StyledTableCell>
                     <TextField
                       required
-                      id="outlined-required"
                       fullWidth
                       placeholder="Nome..."
                       variant="standard"
                       color={cor}
                       focused
+                      value={nomesTabela[index]?.[1] ?? ""}
+                      onChange={(e) => onChangeNome?.(index, 1, e.target.value)}
                     />
                   </StyledTableCell>
-                )}
+                ) : null}
               </StyledTableRow>
             ))}
           </TableBody>

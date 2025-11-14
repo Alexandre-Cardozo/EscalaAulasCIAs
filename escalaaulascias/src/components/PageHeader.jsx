@@ -1,3 +1,9 @@
+import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
+import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { getMonth, getYear, set } from "date-fns";
+import logo from "../assets/logo.jpeg";
 import {
   Typography,
   Grid,
@@ -6,12 +12,8 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { getMonth, getYear, set } from "date-fns";
-import logo from "../assets/logo.jpeg";
+import { Box } from "@mui/material";
+import { AppBar, Toolbar } from "@mui/material";
 
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -81,57 +83,132 @@ export default function PageHeader({
   setIsBebesOn,
 }) {
   return (
-    <Grid
-      container
-      spacing={2}
-      alignItems="center"
-      justifyContent="center"
-      sx={{ paddingLeft: 3, paddingRight: 3 }}
+    <AppBar
+      position="sticky"
+      elevation={3}
+      color="default"
+      sx={{ bgcolor: "background.paper", borderRadius: 0, m: 0 }}
     >
-      <Typography variant="h5">Escala CIAs</Typography>
-      <img src={logo} alt="Logo" width={50} height={50} />
-      <Select
-        value={getMonth(dataSelecionada)}
-        onChange={(e) =>
-          setDataSelecionada(
-            set(dataSelecionada, { month: Number(e.target.value) })
-          )
-        }
+      <Toolbar disableGutters sx={{ px: 0, minHeight: 64 }}>
+        <Typography variant="h5">Escala CIAs</Typography>
+        <img src={logo} alt="Logo" width={50} height={50} />
+        <Select
+          value={getMonth(dataSelecionada)}
+          onChange={(e) =>
+            setDataSelecionada(
+              set(dataSelecionada, { month: Number(e.target.value) })
+            )
+          }
+        >
+          {meses.map((nome, index) => (
+            <MenuItem key={index} value={index}>
+              {nome}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField
+          type="number"
+          fullWidth
+          value={getYear(dataSelecionada)}
+          onChange={(e) =>
+            setDataSelecionada(
+              set(dataSelecionada, { year: Number(e.target.value) })
+            )
+          }
+        />
+        <FormControlLabel
+          control={
+            <IOSSwitch
+              sx={{ m: 1 }}
+              checked={isBebesOn}
+              onChange={(e) => setIsBebesOn(e.target.checked)}
+            />
+          }
+          label="Bebês"
+        />
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          endIcon={
+            <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)" }} />
+          }
+        >
+          PDF
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
+
+  return (
+    <Box
+      component="header"
+      sx={{
+        position: "sticky", // fixa no topo ao rolar (opcional)
+        top: 0,
+        zIndex: (theme) => theme.zIndex.appBar,
+        boxShadow: 5, // intensidade da sombra (0 a 24)
+        bgcolor: "background.paper",
+        width: "100%",
+        borderRadius: 0,
+        m: 0,
+        p: 0,
+      }}
+    >
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        sx={{ paddingLeft: 3, paddingRight: 3 }}
       >
-        {meses.map((nome, index) => (
-          <MenuItem key={index} value={index}>
-            {nome}
-          </MenuItem>
-        ))}
-      </Select>
-      <TextField
-        type="number"
-        fullWidth
-        value={getYear(dataSelecionada)}
-        onChange={(e) =>
-          setDataSelecionada(
-            set(dataSelecionada, { year: Number(e.target.value) })
-          )
-        }
-      />
-      <FormControlLabel
-        control={
-          <IOSSwitch
-            sx={{ m: 1 }}
-            checked={isBebesOn}
-            onChange={(e) => setIsBebesOn(e.target.checked)}
-          />
-        }
-        label="Bebês"
-      />
-      <Button
-        variant="contained"
-        size="large"
-        color="primary"
-        endIcon={<UploadFileRoundedIcon sx={{ transform: "rotate(180deg)" }} />}
-      >
-        PDF
-      </Button>
-    </Grid>
+        <Typography variant="h5">Escala CIAs</Typography>
+        <img src={logo} alt="Logo" width={50} height={50} />
+        <Select
+          value={getMonth(dataSelecionada)}
+          onChange={(e) =>
+            setDataSelecionada(
+              set(dataSelecionada, { month: Number(e.target.value) })
+            )
+          }
+        >
+          {meses.map((nome, index) => (
+            <MenuItem key={index} value={index}>
+              {nome}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField
+          type="number"
+          fullWidth
+          value={getYear(dataSelecionada)}
+          onChange={(e) =>
+            setDataSelecionada(
+              set(dataSelecionada, { year: Number(e.target.value) })
+            )
+          }
+        />
+        <FormControlLabel
+          control={
+            <IOSSwitch
+              sx={{ m: 1 }}
+              checked={isBebesOn}
+              onChange={(e) => setIsBebesOn(e.target.checked)}
+            />
+          }
+          label="Bebês"
+        />
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          endIcon={
+            <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)" }} />
+          }
+        >
+          PDF
+        </Button>
+      </Grid>
+    </Box>
   );
 }

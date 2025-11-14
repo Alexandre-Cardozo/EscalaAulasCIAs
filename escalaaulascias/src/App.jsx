@@ -9,6 +9,20 @@ export default function App() {
   const [domingos, setDomingos] = useState([]);
   const [isBebesOn, setIsBebesOn] = useState(true);
 
+  // Arrays de nomes: sempre 5 linhas x 2 colunas (strings)
+  const [nomesBebes, setNomesBebes] = useState(
+    Array.from({ length: 5 }, () => ["", ""])
+  );
+  const [nomesCriancas, setNomesCriancas] = useState(
+    Array.from({ length: 5 }, () => ["", ""])
+  );
+  const [nomesIntermediarios, setNomesIntermediarios] = useState(
+    Array.from({ length: 5 }, () => ["", ""])
+  );
+  const [nomesAdolescentes, setNomesAdolescentes] = useState(
+    Array.from({ length: 5 }, () => ["", ""])
+  );
+
   // Nomes dos meses para o seletor
   const meses = [
     "Janeiro",
@@ -42,11 +56,21 @@ export default function App() {
       }
     }
     setDomingos(novosDomingos);
-
-    // NOTA: Aqui você também precisará de estados para guardar
-    // os nomes das professoras. Ex:
-    // const [nomes03, setNomes03] = useState({});
   }, [dataSelecionada]); // "Dependência": rode quando isso mudar
+
+  // Handler genérico para atualizar uma célula [linha, coluna]
+  const makeChangeHandler = (setter) => (rowIndex, colIndex, value) => {
+    setter((prev) => {
+      const next = prev.map((cols) => [...cols]);
+      next[rowIndex][colIndex] = value;
+      return next;
+    });
+  };
+
+  const onChangeBebes = makeChangeHandler(setNomesBebes);
+  const onChangeCriancas = makeChangeHandler(setNomesCriancas);
+  const onChangeIntermediarios = makeChangeHandler(setNomesIntermediarios);
+  const onChangeAdolescentes = makeChangeHandler(setNomesAdolescentes);
 
   return (
     <>
@@ -63,6 +87,8 @@ export default function App() {
           cor="#65C466"
           titulo="Bebês"
           variant="bebes"
+          nomesTabela={nomesBebes}
+          onChangeNome={onChangeBebes}
         />
       ) : null}
       <EscalaTable
@@ -70,18 +96,24 @@ export default function App() {
         cor="#FF746C"
         titulo="Crianças"
         variant="padrao"
+        nomesTabela={nomesCriancas}
+        onChangeNome={onChangeCriancas}
       />
       <EscalaTable
         domingos={domingos}
         cor="#6c89ffff"
         titulo="Intermediários"
         variant="padrao"
+        nomesTabela={nomesIntermediarios}
+        onChangeNome={onChangeIntermediarios}
       />
       <EscalaTable
         domingos={domingos}
         cor="#ffcc6cff"
         titulo="Adolescentes"
         variant="padrao"
+        nomesTabela={nomesAdolescentes}
+        onChangeNome={onChangeAdolescentes}
       />
     </>
   );
