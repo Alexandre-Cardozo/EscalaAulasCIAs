@@ -14,11 +14,7 @@ export default function App() {
   const [nomesCriancas, setNomesCriancas] = useState(Array.from({ length: 5 }, () => ["", ""]));
   const [nomesIntermediarios, setNomesIntermediarios] = useState(Array.from({ length: 5 }, () => ["", ""]));
   const [nomesAdolescentes, setNomesAdolescentes] = useState(Array.from({ length: 5 }, () => ["", ""]));
-  const onChangeBebes = makeChangeHandler(setNomesBebes);
-  const onChangeCriancas = makeChangeHandler(setNomesCriancas);
-  const onChangeIntermediarios = makeChangeHandler(setNomesIntermediarios);
-  const onChangeAdolescentes = makeChangeHandler(setNomesAdolescentes);
-
+  
   // Handler genérico para atualizar uma célula [linha, coluna]
   const makeChangeHandler = (setter) => (rowIndex, colIndex, value) => {
     setter((prev) => {
@@ -27,6 +23,11 @@ export default function App() {
       return next;
     });
   };
+  
+  const onChangeBebes = makeChangeHandler(setNomesBebes);
+  const onChangeCriancas = makeChangeHandler(setNomesCriancas);
+  const onChangeIntermediarios = makeChangeHandler(setNomesIntermediarios);
+  const onChangeAdolescentes = makeChangeHandler(setNomesAdolescentes);
 
   // --- Lógica para recalcular os domingos ---
   // Roda toda vez que 'dataSelecionada' mudar
