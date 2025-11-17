@@ -8,10 +8,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  tableCellClasses,
+  styled,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { tableCellClasses } from "@mui/material/TableCell";
-import "jspdf-autotable"; // Uma extensão útil para criar tabelas
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,14 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function EscalaTable({
-  domingos,
-  cor,
-  titulo,
-  variant = "padrao",
-  nomesTabela = [],
-  onChangeNome,
-}) {
+export default function EscalaTable({ domingos, cor, titulo, variant = "padrao", nomesTabela = [], onChangeNome }) {
   return (
     <Paper
       elevation={10}
@@ -55,31 +47,30 @@ export default function EscalaTable({
         backgroundColor: cor,
       }}
     >
-      <Typography
-        variant="h5"
-        align="center"
-        sx={{ marginBottom: 2, fontWeight: "bold" }}
-      >
+      <Typography variant="h5" align="center" sx={{ marginBottom: 2, fontWeight: "bold" }}>
         {titulo}
       </Typography>
       <TableContainer>
         <Table
-          sx={{ minWidth: 500, tableLayout: "fixed" }}
-          aria-label="customized table"
+          sx={{ width: "100%", tableLayout: "fixed" }} // força distribuição por colunas
+          aria-label="escala table"
         >
-          <TableHead
-            sx={{
-              "& .MuiTableCell-head": {
-                backgroundColor: cor,
-                borderTop: "5px solid #FFF",
-              },
-            }}
-          >
+          {/* Define as larguras das colunas: Data fixa, demais ocupam o restante */}
+          <colgroup>
+            <col style={{ width: 150 }} />
+            {variant === "bebes" ? (
+              <col style={{ width: "auto" }} />
+            ) : (
+              <>
+                <col style={{ width: "auto" }} />
+                <col style={{ width: "auto" }} />
+              </>
+            )}
+          </colgroup>
+
+          <TableHead sx={{ "& .MuiTableCell-head": { backgroundColor: cor, borderTop: "2px solid #000" } }}>
             <TableRow>
-              <StyledTableCell
-                align="center"
-                sx={{ width: 150, maxWidth: 150 }}
-              >
+              <StyledTableCell align="center" sx={{ width: 150, maxWidth: 150 }}>
                 Data
               </StyledTableCell>
               {variant === "bebes" ? (
@@ -92,6 +83,7 @@ export default function EscalaTable({
               )}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {domingos.map((data, index) => (
               <StyledTableRow key={index}>
@@ -109,7 +101,8 @@ export default function EscalaTable({
                 >
                   {data ?? ""}
                 </StyledTableCell>
-                <StyledTableCell>
+
+                <StyledTableCell sx={{ p: 1 }}>
                   <TextField
                     required
                     fullWidth
@@ -121,8 +114,9 @@ export default function EscalaTable({
                     onChange={(e) => onChangeNome?.(index, 0, e.target.value)}
                   />
                 </StyledTableCell>
+
                 {variant === "padrao" ? (
-                  <StyledTableCell>
+                  <StyledTableCell sx={{ p: 1 }}>
                     <TextField
                       required
                       fullWidth

@@ -10,34 +10,23 @@ export default function App() {
   const [isBebesOn, setIsBebesOn] = useState(true);
 
   // Arrays de nomes: sempre 5 linhas x 2 colunas (strings)
-  const [nomesBebes, setNomesBebes] = useState(
-    Array.from({ length: 5 }, () => ["", ""])
-  );
-  const [nomesCriancas, setNomesCriancas] = useState(
-    Array.from({ length: 5 }, () => ["", ""])
-  );
-  const [nomesIntermediarios, setNomesIntermediarios] = useState(
-    Array.from({ length: 5 }, () => ["", ""])
-  );
-  const [nomesAdolescentes, setNomesAdolescentes] = useState(
-    Array.from({ length: 5 }, () => ["", ""])
-  );
+  const [nomesBebes, setNomesBebes] = useState(Array.from({ length: 5 }, () => ["", ""]));
+  const [nomesCriancas, setNomesCriancas] = useState(Array.from({ length: 5 }, () => ["", ""]));
+  const [nomesIntermediarios, setNomesIntermediarios] = useState(Array.from({ length: 5 }, () => ["", ""]));
+  const [nomesAdolescentes, setNomesAdolescentes] = useState(Array.from({ length: 5 }, () => ["", ""]));
+  const onChangeBebes = makeChangeHandler(setNomesBebes);
+  const onChangeCriancas = makeChangeHandler(setNomesCriancas);
+  const onChangeIntermediarios = makeChangeHandler(setNomesIntermediarios);
+  const onChangeAdolescentes = makeChangeHandler(setNomesAdolescentes);
 
-  // Nomes dos meses para o seletor
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
+  // Handler genérico para atualizar uma célula [linha, coluna]
+  const makeChangeHandler = (setter) => (rowIndex, colIndex, value) => {
+    setter((prev) => {
+      const next = prev.map((cols) => [...cols]);
+      next[rowIndex][colIndex] = value;
+      return next;
+    });
+  };
 
   // --- Lógica para recalcular os domingos ---
   // Roda toda vez que 'dataSelecionada' mudar
@@ -58,19 +47,21 @@ export default function App() {
     setDomingos(novosDomingos);
   }, [dataSelecionada]); // "Dependência": rode quando isso mudar
 
-  // Handler genérico para atualizar uma célula [linha, coluna]
-  const makeChangeHandler = (setter) => (rowIndex, colIndex, value) => {
-    setter((prev) => {
-      const next = prev.map((cols) => [...cols]);
-      next[rowIndex][colIndex] = value;
-      return next;
-    });
-  };
-
-  const onChangeBebes = makeChangeHandler(setNomesBebes);
-  const onChangeCriancas = makeChangeHandler(setNomesCriancas);
-  const onChangeIntermediarios = makeChangeHandler(setNomesIntermediarios);
-  const onChangeAdolescentes = makeChangeHandler(setNomesAdolescentes);
+  // Nomes dos meses para o seletor
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
 
   return (
     <>
@@ -93,7 +84,7 @@ export default function App() {
       ) : null}
       <EscalaTable
         domingos={domingos}
-        cor="#FF746C"
+        cor="#D24239"
         titulo="Crianças"
         variant="padrao"
         nomesTabela={nomesCriancas}
@@ -101,7 +92,7 @@ export default function App() {
       />
       <EscalaTable
         domingos={domingos}
-        cor="#6c89ffff"
+        cor="#436CDD"
         titulo="Intermediários"
         variant="padrao"
         nomesTabela={nomesIntermediarios}
@@ -109,7 +100,7 @@ export default function App() {
       />
       <EscalaTable
         domingos={domingos}
-        cor="#ffcc6cff"
+        cor="#F0C035"
         titulo="Adolescentes"
         variant="padrao"
         nomesTabela={nomesAdolescentes}

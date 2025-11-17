@@ -1,214 +1,199 @@
-import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  UploadFileRoundedIcon,
+  styled,
+  TextField,
+  Switch,
+  InputLabel,
+  FormControl,
+  NativeSelect,
+  FormLabel,
+  Snackbar,
+  Alert,
+  AppBar,
+  Toolbar,
+  Box,
+  ButtonBase,
+} from "@mui/material";
 import { getMonth, getYear, set } from "date-fns";
 import logo from "../assets/logo.jpeg";
-import {
-  Typography,
-  Grid,
-  TextField,
-  Select,
-  MenuItem,
-  Button,
-} from "@mui/material";
-import { Box } from "@mui/material";
-import { AppBar, Toolbar } from "@mui/material";
+import { useState } from "react";
 
-const IOSSwitch = styled((props) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-  width: 42,
-  height: 26,
-  padding: 0,
-  "& .MuiSwitch-switchBase": {
+const IOSSwitch = styled((props) => <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />)(
+  ({ theme }) => ({
+    width: 42,
+    height: 26,
     padding: 0,
-    margin: 2,
-    transitionDuration: "300ms",
-    "&.Mui-checked": {
-      transform: "translateX(16px)",
-      color: "#fff",
-      "& + .MuiSwitch-track": {
-        backgroundColor: "#65C466",
-        opacity: 1,
-        border: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor: "#000",
+          opacity: 1,
+          border: 0,
+          ...theme.applyStyles("dark", {
+            backgroundColor: "#2ECA45",
+          }),
+        },
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
+        },
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color: theme.palette.grey[100],
         ...theme.applyStyles("dark", {
-          backgroundColor: "#2ECA45",
+          color: theme.palette.grey[600],
         }),
       },
       "&.Mui-disabled + .MuiSwitch-track": {
-        opacity: 0.5,
+        opacity: 0.7,
+        ...theme.applyStyles("dark", {
+          opacity: 0.3,
+        }),
       },
     },
-    "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#33cf4d",
-      border: "6px solid #fff",
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
     },
-    "&.Mui-disabled .MuiSwitch-thumb": {
-      color: theme.palette.grey[100],
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: "#E9E9EA",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
       ...theme.applyStyles("dark", {
-        color: theme.palette.grey[600],
+        backgroundColor: "#39393D",
       }),
     },
-    "&.Mui-disabled + .MuiSwitch-track": {
-      opacity: 0.7,
-      ...theme.applyStyles("dark", {
-        opacity: 0.3,
-      }),
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    boxSizing: "border-box",
-    width: 22,
-    height: 22,
-  },
-  "& .MuiSwitch-track": {
-    borderRadius: 26 / 2,
-    backgroundColor: "#E9E9EA",
-    opacity: 1,
-    transition: theme.transitions.create(["background-color"], {
-      duration: 500,
-    }),
-    ...theme.applyStyles("dark", {
-      backgroundColor: "#39393D",
-    }),
-  },
-}));
+  })
+);
 
-export default function PageHeader({
-  meses,
-  dataSelecionada,
-  setDataSelecionada,
-  isBebesOn,
-  setIsBebesOn,
-}) {
+export default function PageHeader({ meses, dataSelecionada, setDataSelecionada, isBebesOn, setIsBebesOn }) {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleGerarPdf = () => {
+    // ... existing code ...
+    // Dispara o snackbar ao iniciar a ação
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setSnackbarOpen(false);
+  };
+
   return (
-    <AppBar
-      position="sticky"
-      elevation={3}
-      color="default"
-      sx={{ bgcolor: "background.paper", borderRadius: 0, m: 0 }}
-    >
+    <AppBar position="sticky" elevation={3} color="default" sx={{ bgcolor: "background.paper", borderRadius: 0, m: 0 }}>
       <Toolbar disableGutters sx={{ px: 0, minHeight: 64 }}>
-        <Typography variant="h5">Escala CIAs</Typography>
-        <img src={logo} alt="Logo" width={50} height={50} />
-        <Select
-          value={getMonth(dataSelecionada)}
-          onChange={(e) =>
-            setDataSelecionada(
-              set(dataSelecionada, { month: Number(e.target.value) })
-            )
-          }
-        >
-          {meses.map((nome, index) => (
-            <MenuItem key={index} value={index}>
-              {nome}
-            </MenuItem>
-          ))}
-        </Select>
-        <TextField
-          type="number"
-          fullWidth
-          value={getYear(dataSelecionada)}
-          onChange={(e) =>
-            setDataSelecionada(
-              set(dataSelecionada, { year: Number(e.target.value) })
-            )
-          }
-        />
-        <FormControlLabel
-          control={
-            <IOSSwitch
-              sx={{ m: 1 }}
-              checked={isBebesOn}
-              onChange={(e) => setIsBebesOn(e.target.checked)}
-            />
-          }
-          label="Bebês"
-        />
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          endIcon={
-            <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)" }} />
-          }
-        >
-          PDF
-        </Button>
-      </Toolbar>
-    </AppBar>
-  );
+        <img src={logo} alt="Logo" style={{ width: "clamp(80px, 20vw, 120px)", height: "auto", margin: 24 }} />
+        <Box sx={{ maxWidth: 125, minWidth: 125 }}>
+          <FormControl
+            fullWidth
+            sx={{
+              // Label em bold (normal e focado)
+              "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
+              "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
 
-  return (
-    <Box
-      component="header"
-      sx={{
-        position: "sticky", // fixa no topo ao rolar (opcional)
-        top: 0,
-        zIndex: (theme) => theme.zIndex.appBar,
-        boxShadow: 5, // intensidade da sombra (0 a 24)
-        bgcolor: "background.paper",
-        width: "100%",
-        borderRadius: 0,
-        m: 0,
-        p: 0,
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        sx={{ paddingLeft: 3, paddingRight: 3 }}
+              // Texto do input em bold (inclui placeholder)
+              "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
+              "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
+
+              // Underline em preto e mais espesso (opcional)
+              "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+              "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+              "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
+            }}
+          >
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+              Mês
+            </InputLabel>
+            <NativeSelect
+              color="#000"
+              value={getMonth(dataSelecionada)}
+              onChange={(e) => setDataSelecionada(set(dataSelecionada, { month: Number(e.target.value) }))}
+            >
+              {meses.map((nome, index) => (
+                <option key={index} value={index}>
+                  {nome}
+                </option>
+              ))}
+            </NativeSelect>
+          </FormControl>
+        </Box>
+        <Box sx={{ maxWidth: 120 }}>
+          <TextField
+            id="standard-basic"
+            label="Ano"
+            variant="standard"
+            type="number"
+            fullWidth
+            value={getYear(dataSelecionada)}
+            onChange={(e) => setDataSelecionada(set(dataSelecionada, { year: Number(e.target.value) }))}
+            sx={{
+              // Label em bold (normal e focado)
+              "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
+              "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
+
+              // Texto do input em bold (inclui placeholder)
+              "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
+              "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
+
+              // Underline em preto e mais espesso (opcional)
+              "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+              "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+              "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
+            }}
+          />
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ display: "flex", alignItems: "center", marginRight: 3 }}>
+          <FormControlLabel
+            labelPlacement="top"
+            sx={{
+              alignItems: "center",
+              ".MuiFormControlLabel-label": {
+                fontSize: 14,
+                fontWeight: "bold",
+                color: "#000",
+              },
+            }}
+            control={<IOSSwitch sx={{ m: 0.7 }} checked={isBebesOn} onChange={(e) => setIsBebesOn(e.target.checked)} />}
+            label="Bebês"
+          />
+          <ButtonBase
+            disableRipple
+            disableTouchRipple
+            focusRipple={false}
+            aria-label="gerar-pdf"
+            onClick={handleGerarPdf}
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+          >
+            <FormLabel sx={{ fontWeight: "bold", fontSize: 14, color: "#000", bottom: 3 }}>Gerar PDF</FormLabel>
+            <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)", fontSize: 32, color: "#000" }} />
+          </ButtonBase>
+        </Box>
+      </Toolbar>
+      {/* Snackbar inferior com botão de fechar e auto-hide */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Typography variant="h5">Escala CIAs</Typography>
-        <img src={logo} alt="Logo" width={50} height={50} />
-        <Select
-          value={getMonth(dataSelecionada)}
-          onChange={(e) =>
-            setDataSelecionada(
-              set(dataSelecionada, { month: Number(e.target.value) })
-            )
-          }
-        >
-          {meses.map((nome, index) => (
-            <MenuItem key={index} value={index}>
-              {nome}
-            </MenuItem>
-          ))}
-        </Select>
-        <TextField
-          type="number"
-          fullWidth
-          value={getYear(dataSelecionada)}
-          onChange={(e) =>
-            setDataSelecionada(
-              set(dataSelecionada, { year: Number(e.target.value) })
-            )
-          }
-        />
-        <FormControlLabel
-          control={
-            <IOSSwitch
-              sx={{ m: 1 }}
-              checked={isBebesOn}
-              onChange={(e) => setIsBebesOn(e.target.checked)}
-            />
-          }
-          label="Bebês"
-        />
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          endIcon={
-            <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)" }} />
-          }
-        >
-          PDF
-        </Button>
-      </Grid>
-    </Box>
+        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%" }}>
+          Preparando para gerar o PDF
+        </Alert>
+      </Snackbar>
+    </AppBar>
   );
 }
