@@ -6,8 +6,6 @@ import {
   FormControl,
   NativeSelect,
   FormLabel,
-  Snackbar,
-  Alert,
   AppBar,
   Toolbar,
   Box,
@@ -17,7 +15,6 @@ import {
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import { getMonth, getYear, set } from "date-fns";
 import logo from "../assets/logo.jpeg";
-import { useState } from "react";
 
 const IOSSwitch = styled((props) => <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />)(
   ({ theme }) => ({
@@ -79,18 +76,23 @@ const IOSSwitch = styled((props) => <Switch focusVisibleClassName=".Mui-focusVis
   })
 );
 
-export default function PageHeader({ meses, dataSelecionada, setDataSelecionada, isBebesOn, setIsBebesOn }) {
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSelecionada, setDataSelecionada }) {
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
   const handleGerarPdf = () => {
-    // ... existing code ...
-    // Dispara o snackbar ao iniciar a ação
-    setSnackbarOpen(true);
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") return;
-    setSnackbarOpen(false);
+    onGerarPdf?.(isBebesOn);
   };
 
   return (
@@ -184,17 +186,6 @@ export default function PageHeader({ meses, dataSelecionada, setDataSelecionada,
           </ButtonBase>
         </Box>
       </Toolbar>
-      {/* Snackbar inferior com botão de fechar e auto-hide */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={4000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%" }}>
-          Preparando para gerar o PDF
-        </Alert>
-      </Snackbar>
     </AppBar>
   );
 }
