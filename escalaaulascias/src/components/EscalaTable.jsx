@@ -106,12 +106,17 @@ export default function EscalaTable({ domingos, cor, titulo, variant = "padrao",
                   <TextField
                     required
                     fullWidth
-                    placeholder="Nome..."
+                    placeholder="Nome"
                     variant="standard"
                     color={cor}
                     focused
                     value={nomesTabela[index]?.[0] ?? ""}
                     onChange={(e) => onChangeNome?.(index, 0, e.target.value.slice(0, 20))}
+                    sx={{
+                      "& .MuiInputBase-input": {
+                        textAlign: "center",
+                      },
+                    }}
                   />
                 </StyledTableCell>
 
@@ -120,12 +125,17 @@ export default function EscalaTable({ domingos, cor, titulo, variant = "padrao",
                     <TextField
                       required
                       fullWidth
-                      placeholder="Nome..."
+                      placeholder="Nome"
                       variant="standard"
                       color={cor}
                       focused
                       value={nomesTabela[index]?.[1] ?? ""}
                       onChange={(e) => onChangeNome?.(index, 1, e.target.value.slice(0, 20))}
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          textAlign: "center",
+                        },
+                      }}
                     />
                   </StyledTableCell>
                 ) : null}
