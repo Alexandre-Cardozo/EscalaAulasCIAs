@@ -16,14 +16,17 @@ export async function gerarPDF(
   dadosAdolescentes
 ) {
   // Define o PDF template
-  const pdfTemplatePath = isBebesOn
-    ? import.meta.env.BASE_URL + "templatebebes.pdf"
-    : import.meta.env.BASE_URL + "templatepadrao.pdf";
+  const pdfTemplatePath = `${import.meta.env.BASE_URL}${isBebesOn ? "/templatebebes.pdf" : "/templatepadrao.pdf"}`;
 
   // Carrega o PDF template
-  const existingPdfBytes = await fetch(pdfTemplatePath).then((res) => {
-    return res.arrayBuffer();
-  });
+  const response = await fetch(pdfTemplatePath);
+  if (!response.ok) {
+    throw new Error("Erro carregando PDF: " + response.status);
+  }
+  const existingPdfBytes = await response.arrayBuffer();
+
+  /* console.log("BASE_URL:", import.meta.env.BASE_URL);
+  console.log("PDF PATH:", pdfTemplatePath); */
 
   // Carrega o documento PDF
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
