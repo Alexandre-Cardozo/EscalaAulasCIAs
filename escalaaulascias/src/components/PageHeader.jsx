@@ -91,78 +91,120 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
     "Novembro",
     "Dezembro",
   ];
+
   const handleGerarPdf = () => {
     onGerarPdf?.(isBebesOn);
   };
 
   return (
     <AppBar position="sticky" elevation={3} color="default" sx={{ bgcolor: "background.paper", borderRadius: 0, m: 0 }}>
-      <Toolbar disableGutters flexWrap="wrap" sx={{ px: 0, minHeight: 64 }}>
-        <img src={logo} alt="Logo" style={{ width: "clamp(80px, 20vw, 120px)", height: "auto", margin: 24 }} />
-        <Box sx={{ maxWidth: 125, minWidth: 125 }}>
-          <FormControl
-            fullWidth
-            sx={{
-              // Label em bold (normal e focado)
-              "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
-              "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
-
-              // Texto do input em bold (inclui placeholder)
-              "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
-              "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
-
-              // Underline em preto e mais espesso (opcional)
-              "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
-              "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
-              "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
-            }}
-          >
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-              Mês
-            </InputLabel>
-            <NativeSelect
-              color="#000"
-              value={getMonth(dataSelecionada)}
-              onChange={(e) => setDataSelecionada(set(dataSelecionada, { month: Number(e.target.value) }))}
-            >
-              {meses.map((nome, index) => (
-                <option key={index} value={index}>
-                  {nome}
-                </option>
-              ))}
-            </NativeSelect>
-          </FormControl>
-        </Box>
-        <Box sx={{ maxWidth: 60, minWidth: 60 }}>
-          <TextField
-            id="standard-basic"
-            label="Ano"
-            variant="standard"
-            type="number"
-            fullWidth
-            value={getYear(dataSelecionada)}
-            onChange={(e) => setDataSelecionada(set(dataSelecionada, { year: Number(e.target.value) }))}
-            sx={{
-              // Label em bold (normal e focado)
-              "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
-              "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
-
-              // Texto do input em bold (inclui placeholder)
-              "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
-              "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
-
-              // Underline em preto e mais espesso (opcional)
-              "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
-              "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
-              "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
+      <Toolbar
+        disableGutters
+        sx={{
+          px: 3,
+          minHeight: 64,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          py: 1,
+          rowGap: 2,
+        }}
+      >
+        {/* --- GRUPO 1: Logo + Data (ficam juntos em telas grandes) --- */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 3,
+            flexWrap: { xs: "wrap", sm: "nowrap" },
+            // Ocupa largura total apenas quando quebra para separar nos extremos
+            width: { xs: "100%", sm: "auto" },
+            justifyContent: { xs: "space-between", sm: "flex-start" },
+          }}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{
+              width: "120px",
+              height: "auto",
             }}
           />
+
+          {/* Wrapper dos inputs */}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+            }}
+          >
+            <Box sx={{ maxWidth: 125, minWidth: 100 }}>
+              <FormControl
+                fullWidth
+                sx={{
+                  "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
+                  "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
+                  "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
+                  "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
+                  "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                  "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                  "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                }}
+              >
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  Mês
+                </InputLabel>
+                <NativeSelect
+                  value={getMonth(dataSelecionada)}
+                  onChange={(e) => setDataSelecionada(set(dataSelecionada, { month: Number(e.target.value) }))}
+                  sx={{ color: "#000" }}
+                >
+                  {meses.map((nome, index) => (
+                    <option key={index} value={index}>
+                      {nome}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </FormControl>
+            </Box>
+
+            <Box sx={{ maxWidth: 60, minWidth: 50 }}>
+              <TextField
+                label="Ano"
+                variant="standard"
+                type="number"
+                fullWidth
+                value={getYear(dataSelecionada)}
+                onChange={(e) => setDataSelecionada(set(dataSelecionada, { year: Number(e.target.value) }))}
+                sx={{
+                  "& .MuiInputLabel-root": { color: "#000", fontWeight: "bold" },
+                  "& .MuiInputLabel-root.Mui-focused": { color: "#000", fontWeight: "bold" },
+                  "& .MuiInputBase-input": { fontWeight: "bold", color: "#000" },
+                  "& .MuiInputBase-input::placeholder": { fontWeight: "bold", color: "#000" },
+                  "& .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                  "&:hover .MuiInput-underline:before": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                  "& .MuiInput-underline:after": { borderBottomColor: "#000", borderBottomWidth: 2 },
+                }}
+              />
+            </Box>
+          </Box>
         </Box>
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: "flex", alignItems: "center", marginRight: 3 }}>
+
+        {/* --- GRUPO 2: Switch + Botão PDF (ficam juntos, mas separam quando quebra) --- */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 3,
+            width: { xs: "100%", sm: "auto" },
+            justifyContent: { xs: "space-between", sm: "flex-start" },
+          }}
+        >
           <FormControlLabel
             labelPlacement="top"
             sx={{
+              m: 0,
               alignItems: "center",
               ".MuiFormControlLabel-label": {
                 fontSize: 14,
@@ -179,9 +221,13 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             focusRipple={false}
             aria-label="gerar-pdf"
             onClick={handleGerarPdf}
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <FormLabel sx={{ fontWeight: "bold", fontSize: 14, color: "#000", bottom: 3 }}>PDF</FormLabel>
+            <FormLabel sx={{ fontWeight: "bold", fontSize: 14, color: "#000", mb: 0.5 }}>PDF</FormLabel>
             <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)", fontSize: 32, color: "#000" }} />
           </ButtonBase>
         </Box>
