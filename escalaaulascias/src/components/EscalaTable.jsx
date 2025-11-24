@@ -57,7 +57,7 @@ export default function EscalaTable({ domingos, cor, titulo, variant = "padrao",
         >
           {/* Define as larguras das colunas: Data fixa, demais ocupam o restante */}
           <colgroup>
-            <col style={{ width: 150 }} />
+            <col style={{ width: 125 }} />
             {variant === "bebes" ? (
               <col style={{ width: "auto" }} />
             ) : (
@@ -70,7 +70,7 @@ export default function EscalaTable({ domingos, cor, titulo, variant = "padrao",
 
           <TableHead sx={{ "& .MuiTableCell-head": { backgroundColor: cor, borderTop: "2px solid #000" } }}>
             <TableRow>
-              <StyledTableCell align="center" sx={{ width: 150, maxWidth: 150 }}>
+              <StyledTableCell align="center" sx={{ width: 125, maxWidth: 125 }}>
                 Data
               </StyledTableCell>
               {variant === "bebes" ? (

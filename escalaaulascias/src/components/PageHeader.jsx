@@ -97,7 +97,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
 
   return (
     <AppBar position="sticky" elevation={3} color="default" sx={{ bgcolor: "background.paper", borderRadius: 0, m: 0 }}>
-      <Toolbar disableGutters sx={{ px: 0, minHeight: 64 }}>
+      <Toolbar disableGutters flexWrap="wrap" sx={{ px: 0, minHeight: 64 }}>
         <img src={logo} alt="Logo" style={{ width: "clamp(80px, 20vw, 120px)", height: "auto", margin: 24 }} />
         <Box sx={{ maxWidth: 125, minWidth: 125 }}>
           <FormControl
@@ -133,7 +133,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             </NativeSelect>
           </FormControl>
         </Box>
-        <Box sx={{ maxWidth: 120 }}>
+        <Box sx={{ maxWidth: 60, minWidth: 60 }}>
           <TextField
             id="standard-basic"
             label="Ano"
@@ -181,7 +181,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             onClick={handleGerarPdf}
             sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
           >
-            <FormLabel sx={{ fontWeight: "bold", fontSize: 14, color: "#000", bottom: 3 }}>Gerar PDF</FormLabel>
+            <FormLabel sx={{ fontWeight: "bold", fontSize: 14, color: "#000", bottom: 3 }}>PDF</FormLabel>
             <UploadFileRoundedIcon sx={{ transform: "rotate(180deg)", fontSize: 32, color: "#000" }} />
           </ButtonBase>
         </Box>
