@@ -159,7 +159,7 @@ export default function App() {
       {isBebesOn && (
         <EscalaTable
           domingos={domingos}
-          cor="#65C466"
+          cor="verde"
           titulo="Bebês"
           variant="bebes"
           nomesTabela={nomesBebes}
@@ -169,7 +169,7 @@ export default function App() {
 
       <EscalaTable
         domingos={domingos}
-        cor="#D24239"
+        cor="vermelho"
         titulo="Crianças"
         variant="padrao"
         nomesTabela={nomesCriancas}
@@ -178,7 +178,7 @@ export default function App() {
 
       <EscalaTable
         domingos={domingos}
-        cor="#436CDD"
+        cor="azul"
         titulo="Intermediários"
         variant="padrao"
         nomesTabela={nomesIntermediarios}
@@ -187,7 +187,7 @@ export default function App() {
 
       <EscalaTable
         domingos={domingos}
-        cor="#F0C035"
+        cor="amarelo"
         titulo="Adolescentes"
         variant="padrao"
         nomesTabela={nomesAdolescentes}

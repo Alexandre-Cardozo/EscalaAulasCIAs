@@ -1,149 +1,233 @@
+import React from "react";
 import {
-  Typography,
   Paper,
-  TextField,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  tableCellClasses,
-  styled,
+  Box,
+  InputBase,
+  Typography,
 } from "@mui/material";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-}));
+// Função auxiliar para mapear o nome da cor (ex: "verde") para as variáveis CSS do seu index.css
+const getThemeColors = (colorProp) => {
+  const normalizedColor = colorProp?.toLowerCase() || "blue";
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "white",
-  },
-  "&:nth-of-type(even)": {
-    backgroundColor: "#E8E8E8",
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+  const map = {
+    green: { main: "var(--section-green)", light: "var(--section-green-light)" },
+    verde: { main: "var(--section-green)", light: "var(--section-green-light)" },
 
-export default function EscalaTable({ domingos, cor, titulo, variant = "padrao", nomesTabela = [], onChangeNome }) {
+    red: { main: "var(--section-red)", light: "var(--section-red-light)" },
+    vermelho: { main: "var(--section-red)", light: "var(--section-red-light)" },
+
+    blue: { main: "var(--section-blue)", light: "var(--section-blue-light)" },
+    azul: { main: "var(--section-blue)", light: "var(--section-blue-light)" },
+    padrao: { main: "var(--section-blue)", light: "var(--section-blue-light)" },
+
+    purple: { main: "var(--section-purple)", light: "var(--section-purple-light)" },
+    roxo: { main: "var(--section-purple)", light: "var(--section-purple-light)" },
+
+    yellow: { main: "var(--section-yellow)", light: "var(--section-yellow-light)" },
+    amarelo: { main: "var(--section-yellow)", light: "var(--section-yellow-light)" },
+  };
+
+  return map[normalizedColor] || map.blue;
+};
+
+export default function EscalaTable({
+  domingos,
+  cor = "blue",
+  titulo,
+  variant = "padrao",
+  nomesTabela = [],
+  onChangeNome,
+}) {
+  const { main, light } = getThemeColors(cor);
+  const isBebes = variant === "bebes";
+
+  // Estilos reutilizáveis
+  const headerCellStyle = {
+    color: "white",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    fontSize: "0.875rem",
+    borderBottom: "none",
+    padding: "12px 16px",
+    textAlign: "center", // Adicionado para centralizar o texto
+  };
+
+  const inputStyle = {
+    "& .MuiInputBase-input": {
+      textAlign: "center",
+      padding: "8px",
+      fontSize: "0.95rem",
+      borderRadius: "6px",
+      transition: "background-color 0.2s",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
+      },
+      "&:focus": {
+        backgroundColor: "#fff",
+      },
+    },
+  };
+
   return (
-    <Paper
-      elevation={10}
-      sx={{
-        paddingTop: 2,
-        paddingBottom: 4,
-        margin: 3,
-        backgroundColor: cor,
-      }}
-    >
-      <Typography variant="h5" align="center" sx={{ marginBottom: 2, fontWeight: "bold" }}>
-        {titulo}
-      </Typography>
-      <TableContainer>
-        <Table
-          sx={{ width: "100%", tableLayout: "fixed" }} // força distribuição por colunas
-          aria-label="escala table"
+    <Box sx={{ margin: 4 }}>
+      <Paper
+        elevation={3}
+        sx={{
+          width: "100%",
+          marginBottom: 4,
+          overflow: "hidden",
+          borderRadius: 3, // Arredondamento estilo card moderno
+          border: "1px solid rgba(0,0,0,0.08)",
+          backgroundColor: "background.paper",
+        }}
+      >
+        {/* Cabeçalho da Seção (A faixa colorida) */}
+        <Box
+          sx={{
+            backgroundColor: `hsl(${main})`, // Consome a variável CSS
+            padding: 2,
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
         >
-          {/* Define as larguras das colunas: Data fixa, demais ocupam o restante */}
-          <colgroup>
-            <col style={{ width: 125 }} />
-            {variant === "bebes" ? (
+          {/* Efeito sutil de brilho/textura */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(255,255,255,0.1)",
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+              position: "relative",
+              letterSpacing: "0.5px",
+              textShadow: "0px 2px 4px rgba(0,0,0,0.2)",
+            }}
+          >
+            {titulo}
+          </Typography>
+        </Box>
+
+        <TableContainer>
+          <Table sx={{ width: "100%", tableLayout: "fixed" }}>
+            <colgroup>
+              <col style={{ width: 140 }} /> {/* Coluna Data fixa */}
               <col style={{ width: "auto" }} />
-            ) : (
-              <>
-                <col style={{ width: "auto" }} />
-                <col style={{ width: "auto" }} />
-              </>
-            )}
-          </colgroup>
+              {!isBebes && <col style={{ width: "auto" }} />}
+            </colgroup>
 
-          <TableHead sx={{ "& .MuiTableCell-head": { backgroundColor: cor, borderTop: "2px solid #000" } }}>
-            <TableRow>
-              <StyledTableCell align="center" sx={{ width: 125, maxWidth: 125 }}>
-                Data
-              </StyledTableCell>
-              {variant === "bebes" ? (
-                <StyledTableCell align="center">Período</StyledTableCell>
-              ) : (
-                <>
-                  <StyledTableCell align="center">Louvor</StyledTableCell>
-                  <StyledTableCell align="center">Palavra</StyledTableCell>
-                </>
-              )}
-            </TableRow>
-          </TableHead>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: `hsl(${main})`, opacity: 0.95 }}>
+                <TableCell sx={{ ...headerCellStyle, paddingLeft: 3 }}>DATA</TableCell>
+                {isBebes ? (
+                  <TableCell sx={headerCellStyle}>PERÍODO</TableCell>
+                ) : (
+                  <>
+                    <TableCell sx={headerCellStyle}>LOUVOR</TableCell>
+                    <TableCell sx={headerCellStyle}>PALAVRA</TableCell>
+                  </>
+                )}
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {domingos.map((data, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell
-                  component="th"
-                  scope="row"
-                  align="center"
-                  sx={{
-                    width: 150,
-                    maxWidth: 150,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {data ?? ""}
-                </StyledTableCell>
+            <TableBody>
+              {domingos.map((data, index) => {
+                // Alternância de cores baseada nas variáveis light
+                const isEven = index % 2 === 0;
+                const rowBg = isEven ? `hsl(${light})` : "transparent";
 
-                <StyledTableCell sx={{ p: 1 }}>
-                  <TextField
-                    required
-                    fullWidth
-                    placeholder="Nome"
-                    variant="standard"
-                    color={cor}
-                    focused
-                    value={nomesTabela[index]?.[0] ?? ""}
-                    onChange={(e) => onChangeNome?.(index, 0, e.target.value.slice(0, 20))}
+                return (
+                  <TableRow
+                    key={index}
                     sx={{
-                      "& .MuiInputBase-input": {
-                        textAlign: "center",
-                      },
+                      backgroundColor: rowBg,
+                      "&:hover": { backgroundColor: "rgba(0,0,0,0.02)" }, // Hover sutil
+                      "& td": { borderBottom: "1px solid rgba(0,0,0,0.05)" },
                     }}
-                  />
-                </StyledTableCell>
-
-                {variant === "padrao" ? (
-                  <StyledTableCell sx={{ p: 1 }}>
-                    <TextField
-                      required
-                      fullWidth
-                      placeholder="Nome"
-                      variant="standard"
-                      color={cor}
-                      focused
-                      value={nomesTabela[index]?.[1] ?? ""}
-                      onChange={(e) => onChangeNome?.(index, 1, e.target.value.slice(0, 20))}
+                  >
+                    {/* Célula Data */}
+                    <TableCell
+                      component="th"
+                      scope="row"
                       sx={{
-                        "& .MuiInputBase-input": {
-                          textAlign: "center",
-                        },
+                        paddingLeft: 3,
+                        fontWeight: 600,
+                        color: "text.secondary",
+                        whiteSpace: "nowrap",
+                        textAlign: "center", // Adicionado para centralizar o texto da célula de dados
                       }}
-                    />
-                  </StyledTableCell>
-                ) : null}
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+                    >
+                      {data ?? ""}
+                    </TableCell>
+
+                    {/* Célula Input 1 */}
+                    <TableCell sx={{ p: 1 }}>
+                      <InputBase
+                        fullWidth
+                        placeholder="Nome..."
+                        value={nomesTabela[index]?.[0] ?? ""}
+                        onChange={(e) => onChangeNome?.(index, 0, e.target.value.slice(0, 20))}
+                        sx={inputStyle}
+                      />
+                    </TableCell>
+
+                    {/* Célula Input 2 (Se não for bebês) */}
+                    {!isBebes && (
+                      <TableCell sx={{ p: 1 }}>
+                        <InputBase
+                          fullWidth
+                          placeholder="Nome..."
+                          value={nomesTabela[index]?.[1] ?? ""}
+                          onChange={(e) => onChangeNome?.(index, 1, e.target.value.slice(0, 20))}
+                          sx={inputStyle}
+                        />
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* Footer da Seção (A faixa colorida) */}
+        <Box
+          sx={{
+            backgroundColor: `hsl(${main})`, // Consome a variável CSS
+            padding: 2,
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Efeito sutil de brilho/textura */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(255,255,255,0.1)",
+            }}
+          />
+        </Box>
+      </Paper>
+    </Box>
   );
 }

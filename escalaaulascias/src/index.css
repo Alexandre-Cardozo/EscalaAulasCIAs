@@ -17,4 +17,30 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /* ================================================= */
+  /* VARIÁVEIS DE COR PARA O COMPONENTE ESCALATABLE    */
+  /* Valores HSL (Hue, Saturation, Lightness) puros    */
+  /* Ajustado: Variáveis '*-light' agora têm L=95% para listrado claro. */
+  /* ================================================= */
+
+  /* Verde */
+  --section-green: 142 76% 36%;
+  --section-green-light: 142 30% 90%; /* Ajustado para CLARO */
+
+  /* Vermelho */
+  --section-red: 354 70% 54%;
+  --section-red-light: 354 30% 90%; /* Ajustado para CLARO */
+
+  /* Azul (Padrão) */
+  --section-blue: 217 91% 60%;
+  --section-blue-light: 217 30% 90%; /* Ajustado para CLARO */
+  
+  /* Roxo */
+  --section-purple: 262 83% 58%;
+  --section-purple-light: 262 30% 90%; /* Ajustado para CLARO */
+  
+  /* Amarelo */
+  --section-yellow: 45 93% 47%;
+  --section-yellow-light: 45 30% 90%; /* Ajustado para CLARO */
 }
