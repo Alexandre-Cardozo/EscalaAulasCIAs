@@ -1,7 +1,7 @@
 import PageHeader from "./components/PageHeader.jsx";
 import EscalaTable from "./components/EscalaTable.jsx";
 import { useState, useEffect, useRef } from "react";
-import { getMonth, getYear, getDaysInMonth, format } from "date-fns";
+import { getMonth, getYear, getDaysInMonth, format, addMonths, startOfMonth } from "date-fns";
 import { gerarPDF } from "./GeneratePdf.jsx";
 import { Snackbar, Alert } from "@mui/material";
 import usePersistentState from "./states/LocalPersistence.jsx";
@@ -11,7 +11,10 @@ export default function App() {
    * ESTADOS PERSISTENTES
    * ----------------------------- */
 
-  const [dataSelecionada, setDataSelecionada] = usePersistentState("dataSelecionada", new Date());
+  const [dataSelecionada, setDataSelecionada] = usePersistentState(
+    "dataSelecionada",
+    startOfMonth(addMonths(new Date(), 1))
+  );
 
   const [isBebesOn, setIsBebesOn] = usePersistentState("isBebesOn", true);
 
@@ -64,10 +67,7 @@ export default function App() {
     const mes = getMonth(dataSelecionada);
 
     // Verifica se o mês ou o ano mudaram
-    if (
-      prevMonthYear.current.month !== mes ||
-      prevMonthYear.current.year !== ano
-    ) {
+    if (prevMonthYear.current.month !== mes || prevMonthYear.current.year !== ano) {
       // RESETAR NOMES ao trocar mês/ano
       setNomesBebes(Array.from({ length: 5 }, () => ["", ""]));
       setNomesCriancas(Array.from({ length: 5 }, () => ["", ""]));
