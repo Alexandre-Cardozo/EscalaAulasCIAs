@@ -126,11 +126,10 @@ export default function EscalaTable({
         <TableContainer>
           <Table sx={{ width: "100%", tableLayout: "fixed" }}>
             <colgroup>
-              <col style={{ width: 140 }} /> {/* Coluna Data fixa */}
+              <col style={{ width: 140 }} />
               <col style={{ width: "auto" }} />
               {!isBebes && <col style={{ width: "auto" }} />}
             </colgroup>
-
             <TableHead>
               <TableRow sx={{ backgroundColor: `hsl(${main})`, opacity: 0.95 }}>
                 <TableCell sx={{ ...headerCellStyle, paddingLeft: 3 }}>DATA</TableCell>
@@ -144,7 +143,6 @@ export default function EscalaTable({
                 )}
               </TableRow>
             </TableHead>
-
             <TableBody>
               {domingos.map((data, index) => {
                 // Alternância de cores baseada nas variáveis light
