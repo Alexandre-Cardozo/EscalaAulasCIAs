@@ -179,7 +179,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             sx={(theme) => ({
               display: "flex",
               alignItems: "center",
-              gap: { xs: 2, md: 2 },
+              gap: 0.5,
               borderRadius: "9999px",
               backgroundColor: theme.palette.grey[50],
               border: `1px solid ${theme.palette.grey[300]}`,
