@@ -5,13 +5,12 @@ import {
   InputLabel,
   FormControl,
   NativeSelect,
-  Select,
   AppBar,
   Toolbar,
   Box,
   FormControlLabel,
-  Typography,
   IconButton,
+  Typography,
 } from "@mui/material";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import { getMonth, getYear, set } from "date-fns";
@@ -102,23 +101,23 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
       <Toolbar
         disableGutters
         sx={{
-          px: 3,
+          px: { xs: 1.5, sm: 3 },
           minHeight: 64,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-between",
           alignItems: "center",
           py: 1,
-          rowGap: 2,
+          rowGap: 1.5,
         }}
       >
-        {/* --- GRUPO 1: Logo + Data (ficam juntos em telas grandes) --- */}
+        {/* --- GRUPO 1: Logo + Data --- */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 3,
-            flexWrap: { xs: "wrap", sm: "nowrap" },
+            gap: { xs: 1, sm: 3 },
+            flexWrap: "nowrap",
             width: { xs: "100%", sm: "auto" },
             justifyContent: { xs: "space-between", sm: "flex-start" },
           }}
@@ -128,14 +127,17 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
               display: "flex",
               alignItems: "center",
               gap: 1,
+              flexShrink: 0,
             }}
           >
-            <img
+            <Box
+              component="img"
               src={logo}
               alt="Logo"
-              style={{
-                width: "120px",
+              sx={{
+                width: { xs: "100px", sm: "120px" },
                 height: "auto",
+                display: "block",
               }}
             />
 
@@ -183,17 +185,18 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
               borderRadius: "9999px",
               backgroundColor: theme.palette.grey[50],
               border: `1px solid ${theme.palette.grey[300]}`,
-              padding: "6px",
-              height: "36px", // Altura fixa para o container
+              padding: "4px",
+              height: "36px",
+              maxWidth: { xs: "220px", sm: "none" },
             })}
           >
-            {/* Seletor de Mês (NativeSelect) */}
+            {/* Seletor de Mês */}
             <FormControl
               sx={{
-                minWidth: "140px",
+                minWidth: { xs: "120px", sm: "140px" },
                 maxWidth: "190px",
                 flex: 1,
-                height: "36px", // Altura fixa
+                height: "36px",
                 "& .MuiInputLabel-root": { display: "none" },
                 "& .MuiInputBase-root": {
                   height: "36px !important",
@@ -211,13 +214,9 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
                     borderColor: "hsl(var(--ring))",
                   },
                 },
-                "& .MuiInput-root": {
-                  marginTop: "0 !important",
-                },
+                "& .MuiInput-root": { marginTop: "0 !important" },
                 "& .MuiInput-underline:before": { borderBottom: "none !important" },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottom: "none !important",
-                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": { borderBottom: "none !important" },
                 "& .MuiInput-underline:after": { borderBottom: "none !important" },
                 "& .MuiInputBase-input": {
                   color: "hsl(var(--foreground))",
@@ -226,10 +225,11 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
                   textAlign: "left",
                   height: "36px",
                   lineHeight: "36px",
+                  fontSize: { xs: "0.875rem", sm: "1rem" },
                 },
                 "& .MuiNativeSelect-icon": {
                   color: "hsl(var(--foreground))",
-                  right: "12px",
+                  right: "8px",
                 },
               }}
             >
@@ -249,7 +249,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
               </NativeSelect>
             </FormControl>
 
-            {/* Input de Ano (TextField) */}
+            {/* Input de Ano */}
             <TextField
               label="Ano"
               variant="standard"
@@ -257,9 +257,9 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
               value={getYear(dataSelecionada)}
               onChange={(e) => setDataSelecionada(set(dataSelecionada, { year: Number(e.target.value) }))}
               sx={{
-                minWidth: "80px",
-                maxWidth: "100px",
-                height: "36px", // Altura fixa
+                minWidth: { xs: "60px", sm: "80px" },
+                maxWidth: { xs: "60px", sm: "85px" },
+                height: "36px",
                 margin: 0,
                 "& .MuiInputLabel-root": { display: "none" },
                 "& .MuiInputBase-root": {
@@ -274,28 +274,25 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
                     borderColor: "hsl(var(--ring))",
                   },
                 },
-                "& .MuiInput-root": {
-                  marginTop: "0 !important",
-                },
+                "& .MuiInput-root": { marginTop: "0 !important" },
                 "& .MuiInput-underline:before": { borderBottom: "none !important" },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottom: "none !important",
-                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": { borderBottom: "none !important" },
                 "& .MuiInput-underline:after": { borderBottom: "none !important" },
                 "& .MuiInputBase-input": {
                   color: "hsl(var(--foreground))",
                   fontWeight: "500",
-                  padding: "0 12px !important",
+                  padding: "0 8px !important", // Padding interno menor
                   textAlign: "center",
                   height: "36px",
                   lineHeight: "36px",
+                  fontSize: { xs: "0.875rem", sm: "1rem" },
                 },
               }}
             />
           </Box>
         </Box>
 
-        {/* --- GRUPO 2: Switch + Botão PDF (ficam juntos, mas separam quando quebra) --- */}
+        {/* --- GRUPO 2: Switch + Botão PDF --- */}
         <Box
           sx={{
             display: "flex",
@@ -308,7 +305,8 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
           <FormControlLabel
             labelPlacement="top"
             sx={{
-              m: 1,
+              m: 0,
+              mr: 1,
               alignItems: "center",
               ".MuiFormControlLabel-label": {
                 fontSize: 14,
