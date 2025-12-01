@@ -18,12 +18,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  /* ================================================= */
-  /* VARIÁVEIS DE COR PARA O COMPONENTE ESCALATABLE    */
-  /* Valores HSL (Hue, Saturation, Lightness) puros    */
-  /* Ajustado: Variáveis '*-light' agora têm L=95% para listrado claro. */
-  /* ================================================= */
-
   /* Verde */
   --section-green: 142 76% 36%;
   --section-green-light: 142 30% 90%; /* Ajustado para CLARO */
@@ -35,12 +29,83 @@ body {
   /* Azul (Padrão) */
   --section-blue: 217 91% 60%;
   --section-blue-light: 217 30% 90%; /* Ajustado para CLARO */
-  
+
   /* Roxo */
   --section-purple: 262 83% 58%;
   --section-purple-light: 262 30% 90%; /* Ajustado para CLARO */
-  
+
   /* Amarelo */
   --section-yellow: 45 93% 47%;
   --section-yellow-light: 45 30% 90%; /* Ajustado para CLARO */
+
+  /* Variáveis para o componente de dropdown */
+  --foreground: 210 11% 15%; /* Cor do texto principal */
+  --border: 214 32% 91%; /* Cor das bordas */
+  --accent: 210 65% 90%; /* Cor de fundo hover */
+  --primary: 210 79% 46%; /* Cor primária (azul) */
+  --muted-foreground: 215 16% 47%; /* Cor de texto secundário */
+
+  /* Download Button */
+  .download-button {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    background-color: white;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .download-button:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--primary));
+    border-color: hsl(var(--primary));
+  }
+
+  .download-button:active {
+    transform: scale(0.98);
+  }
+
+  /* Baby Toggle Button */
+  .baby-toggle-button {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    color: hsl(var(--muted-foreground));
+  }
+
+  .baby-toggle-button:hover {
+    background-color: hsl(var(--accent));
+    border-color: hsl(var(--border));
+  }
+
+  .baby-toggle-button.active {
+    background-color: hsl(var(--section-green));
+    border-color: hsl(var(--section-green));
+    color: white;
+  }
+
+  .baby-toggle-button.active:hover {
+    background-color: hsl(142 76% 32%); /* Verde um pouco mais escuro no hover */
+    border-color: hsl(142 76% 32%);
+  }
+
+  .baby-toggle-button:active {
+    transform: scale(0.95);
+  }
 }

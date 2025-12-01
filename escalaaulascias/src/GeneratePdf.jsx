@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { getMonth, getYear, getDaysInMonth, format } from "date-fns";
+import { getMonth, getYear } from "date-fns";
 
 function centralizaTexto(pagina, palavra, coordenadaX, coordenadaY, tamanho, fonte) {
   const larguraPalavraInicial = fonte.widthOfTextAtSize(palavra, tamanho);
@@ -9,7 +9,7 @@ function centralizaTexto(pagina, palavra, coordenadaX, coordenadaY, tamanho, fon
 export async function gerarPDF(
   isBebesOn,
   dataSelecionada,
-  domingos,
+  diasAulas,
   dadosBebes,
   dadosCriancas,
   dadosIntermediarios,
@@ -44,30 +44,30 @@ export async function gerarPDF(
   );
 
   // Escreve os dados das datas
-  page.drawText(domingos[0], { x: 35, y: isBebesOn ? 665 : 485, size: 13, font });
-  page.drawText(domingos[1], { x: 35, y: isBebesOn ? 645 : 465, size: 13, font });
-  page.drawText(domingos[2], { x: 35, y: isBebesOn ? 625 : 445, size: 13, font });
-  page.drawText(domingos[3], { x: 35, y: isBebesOn ? 605 : 425, size: 13, font });
-  page.drawText(domingos[4], { x: 35, y: isBebesOn ? 585 : 405, size: 13, font });
+  page.drawText(diasAulas[0], { x: 35, y: isBebesOn ? 665 : 485, size: 13, font });
+  page.drawText(diasAulas[1], { x: 35, y: isBebesOn ? 645 : 465, size: 13, font });
+  page.drawText(diasAulas[2], { x: 35, y: isBebesOn ? 625 : 445, size: 13, font });
+  page.drawText(diasAulas[3], { x: 35, y: isBebesOn ? 605 : 425, size: 13, font });
+  page.drawText(diasAulas[4], { x: 35, y: isBebesOn ? 585 : 405, size: 13, font });
   //
-  page.drawText(domingos[0], { x: 35, y: isBebesOn ? 485 : 305, size: 13, font });
-  page.drawText(domingos[1], { x: 35, y: isBebesOn ? 465 : 285, size: 13, font });
-  page.drawText(domingos[2], { x: 35, y: isBebesOn ? 445 : 265, size: 13, font });
-  page.drawText(domingos[3], { x: 35, y: isBebesOn ? 425 : 245, size: 13, font });
-  page.drawText(domingos[4], { x: 35, y: isBebesOn ? 405 : 225, size: 13, font });
+  page.drawText(diasAulas[0], { x: 35, y: isBebesOn ? 485 : 305, size: 13, font });
+  page.drawText(diasAulas[1], { x: 35, y: isBebesOn ? 465 : 285, size: 13, font });
+  page.drawText(diasAulas[2], { x: 35, y: isBebesOn ? 445 : 265, size: 13, font });
+  page.drawText(diasAulas[3], { x: 35, y: isBebesOn ? 425 : 245, size: 13, font });
+  page.drawText(diasAulas[4], { x: 35, y: isBebesOn ? 405 : 225, size: 13, font });
   //
-  page.drawText(domingos[0], { x: 35, y: isBebesOn ? 305 : 125, size: 13, font });
-  page.drawText(domingos[1], { x: 35, y: isBebesOn ? 285 : 105, size: 13, font });
-  page.drawText(domingos[2], { x: 35, y: isBebesOn ? 265 : 85, size: 13, font });
-  page.drawText(domingos[3], { x: 35, y: isBebesOn ? 245 : 65, size: 13, font });
-  page.drawText(domingos[4], { x: 35, y: isBebesOn ? 225 : 45, size: 13, font });
+  page.drawText(diasAulas[0], { x: 35, y: isBebesOn ? 305 : 125, size: 13, font });
+  page.drawText(diasAulas[1], { x: 35, y: isBebesOn ? 285 : 105, size: 13, font });
+  page.drawText(diasAulas[2], { x: 35, y: isBebesOn ? 265 : 85, size: 13, font });
+  page.drawText(diasAulas[3], { x: 35, y: isBebesOn ? 245 : 65, size: 13, font });
+  page.drawText(diasAulas[4], { x: 35, y: isBebesOn ? 225 : 45, size: 13, font });
   //
   if (isBebesOn) {
-    page.drawText(domingos[0], { x: 35, y: 125, size: 13, font });
-    page.drawText(domingos[1], { x: 35, y: 105, size: 13, font });
-    page.drawText(domingos[2], { x: 35, y: 85, size: 13, font });
-    page.drawText(domingos[3], { x: 35, y: 65, size: 13, font });
-    page.drawText(domingos[4], { x: 35, y: 45, size: 13, font });
+    page.drawText(diasAulas[0], { x: 35, y: 125, size: 13, font });
+    page.drawText(diasAulas[1], { x: 35, y: 105, size: 13, font });
+    page.drawText(diasAulas[2], { x: 35, y: 85, size: 13, font });
+    page.drawText(diasAulas[3], { x: 35, y: 65, size: 13, font });
+    page.drawText(diasAulas[4], { x: 35, y: 45, size: 13, font });
   }
 
   // Escreve os dados preenchidos
@@ -87,7 +87,7 @@ export async function gerarPDF(
     ? centralizaTexto(page, dadosBebes[3][0], 345, 605, 13, font)
     : (centralizaTexto(page, dadosCriancas[3][0], 230, 425, 13, font),
       centralizaTexto(page, dadosCriancas[3][1], 460, 425, 13, font));
-  domingos[4] != ""
+  diasAulas[4] != ""
     ? isBebesOn
       ? centralizaTexto(page, dadosBebes[4][0], 345, 585, 13, font)
       : (centralizaTexto(page, dadosCriancas[4][0], 230, 405, 13, font),
@@ -115,7 +115,7 @@ export async function gerarPDF(
       centralizaTexto(page, dadosCriancas[3][1], 460, 425, 13, font))
     : (centralizaTexto(page, dadosIntermediarios[3][0], 230, 245, 13, font),
       centralizaTexto(page, dadosIntermediarios[3][1], 460, 245, 13, font));
-  domingos[4] != ""
+  diasAulas[4] != ""
     ? isBebesOn
       ? (centralizaTexto(page, dadosCriancas[4][0], 230, 405, 13, font),
         centralizaTexto(page, dadosCriancas[4][1], 460, 405, 13, font))
@@ -144,7 +144,7 @@ export async function gerarPDF(
       centralizaTexto(page, dadosIntermediarios[3][1], 460, 245, 13, font))
     : (centralizaTexto(page, dadosAdolescentes[3][0], 230, 65, 13, font),
       centralizaTexto(page, dadosAdolescentes[3][1], 460, 65, 13, font));
-  domingos[4] != ""
+  diasAulas[4] != ""
     ? isBebesOn
       ? (centralizaTexto(page, dadosIntermediarios[4][0], 230, 225, 13, font),
         centralizaTexto(page, dadosIntermediarios[4][1], 460, 225, 13, font))
@@ -162,7 +162,7 @@ export async function gerarPDF(
       centralizaTexto(page, dadosAdolescentes[2][1], 460, 85, 13, font)),
       (centralizaTexto(page, dadosAdolescentes[3][0], 230, 65, 13, font),
       centralizaTexto(page, dadosAdolescentes[3][1], 460, 65, 13, font)),
-      domingos[4] != ""
+      diasAulas[4] != ""
         ? (centralizaTexto(page, dadosAdolescentes[4][0], 230, 45, 13, font),
           centralizaTexto(page, dadosAdolescentes[4][1], 460, 45, 13, font))
         : null;

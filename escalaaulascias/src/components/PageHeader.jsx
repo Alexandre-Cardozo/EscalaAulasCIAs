@@ -1,80 +1,9 @@
-import {
-  styled,
-  TextField,
-  Switch,
-  InputLabel,
-  FormControl,
-  NativeSelect,
-  AppBar,
-  Toolbar,
-  Box,
-  FormControlLabel,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
+import { TextField, InputLabel, FormControl, NativeSelect, AppBar, Toolbar, Box, Typography } from "@mui/material";
 import { getMonth, getYear, set } from "date-fns";
 import logo from "../assets/logo.jpeg";
-
-const IOSSwitch = styled((props) => <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />)(
-  ({ theme }) => ({
-    width: 42,
-    height: 26,
-    padding: 0,
-    "& .MuiSwitch-switchBase": {
-      padding: 0,
-      margin: 2,
-      transitionDuration: "300ms",
-      "&.Mui-checked": {
-        transform: "translateX(16px)",
-        color: "#fff",
-        "& + .MuiSwitch-track": {
-          backgroundColor: "#23A349",
-          opacity: 1,
-          border: 0,
-          ...theme.applyStyles("dark", {
-            backgroundColor: "#2ECA45",
-          }),
-        },
-        "&.Mui-disabled + .MuiSwitch-track": {
-          opacity: 0.5,
-        },
-      },
-      "&.Mui-focusVisible .MuiSwitch-thumb": {
-        color: "#33cf4d",
-        border: "6px solid #fff",
-      },
-      "&.Mui-disabled .MuiSwitch-thumb": {
-        color: theme.palette.grey[100],
-        ...theme.applyStyles("dark", {
-          color: theme.palette.grey[600],
-        }),
-      },
-      "&.Mui-disabled + .MuiSwitch-track": {
-        opacity: 0.7,
-        ...theme.applyStyles("dark", {
-          opacity: 0.3,
-        }),
-      },
-    },
-    "& .MuiSwitch-thumb": {
-      boxSizing: "border-box",
-      width: 22,
-      height: 22,
-    },
-    "& .MuiSwitch-track": {
-      borderRadius: 26 / 2,
-      backgroundColor: "#E9E9EA",
-      opacity: 1,
-      transition: theme.transitions.create(["background-color"], {
-        duration: 500,
-      }),
-      ...theme.applyStyles("dark", {
-        backgroundColor: "#39393D",
-      }),
-    },
-  })
-);
+import DaySelector from "../components/menu/DaySelector";
+import DownloadButton from "../components/menu/DownloadButton";
+import BabyToggleButton from "../components/menu/BabyToggleButton";
 
 export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSelecionada, setDataSelecionada }) {
   const meses = [
@@ -302,50 +231,9 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             justifyContent: { xs: "space-between", sm: "flex-start" },
           }}
         >
-          <FormControlLabel
-            labelPlacement="top"
-            sx={{
-              m: 0,
-              mr: 1,
-              alignItems: "center",
-              ".MuiFormControlLabel-label": {
-                fontSize: 14,
-                fontWeight: "bold",
-                color: "#23A349",
-              },
-            }}
-            control={
-              <IOSSwitch sx={{ m: 0.25 }} checked={isBebesOn} onChange={(e) => setIsBebesOn(e.target.checked)} />
-            }
-            label="Bebês"
-          />
-          <IconButton
-            aria-label="gerar-pdf"
-            title="Baixar PDF"
-            onClick={handleGerarPdf}
-            sx={(theme) => ({
-              width: 50,
-              height: 50,
-              borderRadius: "50%",
-              backgroundColor: theme.palette.grey[50],
-              border: `1px solid ${theme.palette.grey[300]}`,
-              boxShadow: "none",
-              color: theme.palette.text.primary,
-              "&:hover": {
-                backgroundColor: theme.palette.grey[100],
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-              },
-            })}
-          >
-            <UploadFileRoundedIcon
-              sx={{
-                fontSize: 30,
-                color: "primary.main",
-                transform: "rotate(180deg)",
-              }}
-            />
-          </IconButton>
+          <DaySelector isBebesOn={isBebesOn} />
+          <BabyToggleButton isActive={isBebesOn} onChange={setIsBebesOn} label="Bebês" />
+          <DownloadButton onClick={handleGerarPdf} label="Baixar PDF" />
         </Box>
       </Toolbar>
     </AppBar>

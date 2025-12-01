@@ -54,13 +54,13 @@ export default function App() {
   }, []);
 
   /* -----------------------------
-   * DOMINGOS (não persistente)
+   * Dias das Aulas  (não persistente)
    * ----------------------------- */
-  const [domingos, setDomingos] = useState([]);
-  const [domingosPdf, setDomingosPdf] = useState([]);
+  const [diasAulas, setDiasAulas] = useState([]);
+  const [diasAulasPdf, setDiasAulasPdf] = useState([]);
 
   /* -----------------------------
-   * Gera domingos da data selecionada e atualiza estados
+   * Gera Dias das Aulas da data selecionada e atualiza estados
    * ----------------------------- */
   useEffect(() => {
     const ano = getYear(dataSelecionada);
@@ -78,22 +78,22 @@ export default function App() {
     // Atualiza o ref com o mês e ano atuais
     prevMonthYear.current = { month: mes, year: ano };
 
-    const novosDomingos = [];
+    const novosDiasAulas = [];
     const diasNoMes = getDaysInMonth(dataSelecionada);
 
     for (let dia = 1; dia <= diasNoMes; dia++) {
       const dataAtual = new Date(ano, mes, dia);
       if (dataAtual.getDay() === 0) {
-        novosDomingos.push(format(dataAtual, "dd/MM/yyyy"));
+        novosDiasAulas.push(format(dataAtual, "dd/MM/yyyy"));
       }
     }
 
-    setDomingos(novosDomingos);
+    setDiasAulas(novosDiasAulas);
 
     // Completar até 5 posições para PDF
-    const pdf = [...novosDomingos];
+    const pdf = [...novosDiasAulas];
     while (pdf.length < 5) pdf.push("");
-    setDomingosPdf(pdf);
+    setDiasAulasPdf(pdf);
   }, [dataSelecionada]);
 
   /* -----------------------------
@@ -120,7 +120,7 @@ export default function App() {
       await gerarPDF(
         isBebesOn,
         dataSelecionada,
-        domingosPdf,
+        diasAulasPdf,
         nomesBebes,
         nomesCriancas,
         nomesIntermediarios,
@@ -158,7 +158,7 @@ export default function App() {
 
       {isBebesOn && (
         <EscalaTable
-          domingos={domingos}
+          diasAulas={diasAulas}
           cor="verde"
           titulo="Bebês"
           variant="bebes"
@@ -168,7 +168,7 @@ export default function App() {
       )}
 
       <EscalaTable
-        domingos={domingos}
+        diasAulas={diasAulas}
         cor="vermelho"
         titulo="Crianças"
         variant="padrao"
@@ -177,7 +177,7 @@ export default function App() {
       />
 
       <EscalaTable
-        domingos={domingos}
+        diasAulas={diasAulas}
         cor="azul"
         titulo="Intermediários"
         variant="padrao"
@@ -186,7 +186,7 @@ export default function App() {
       />
 
       <EscalaTable
-        domingos={domingos}
+        diasAulas={diasAulas}
         cor="amarelo"
         titulo="Adolescentes"
         variant="padrao"

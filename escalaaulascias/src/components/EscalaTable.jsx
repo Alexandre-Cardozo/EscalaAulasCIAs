@@ -38,7 +38,7 @@ const getThemeColors = (colorProp) => {
 };
 
 export default function EscalaTable({
-  domingos,
+  diasAulas,
   cor = "blue",
   titulo,
   variant = "padrao",
@@ -144,7 +144,7 @@ export default function EscalaTable({
               </TableRow>
             </TableHead>
             <TableBody>
-              {domingos.map((data, index) => {
+              {diasAulas.map((data, index) => {
                 // Alternância de cores baseada nas variáveis light
                 const isEven = index % 2 === 0;
                 const rowBg = isEven ? `hsl(${light})` : "transparent";
