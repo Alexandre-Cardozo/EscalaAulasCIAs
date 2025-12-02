@@ -8,8 +8,9 @@ export default function DownloadButton({ onClick, label = "Baixar PDF" }) {
       aria-label="gerar-pdf"
       title={label}
       className="download-button"
+      style={{ height: "48px", width: "60px", display: "flex", alignItems: "center", justifyContent: "center" }}
     >
-      <Download size={20} />
+      <Download size={22} />
     </button>
   );
 }

@@ -60,12 +60,12 @@ export default function DaySelector({ isBebesOn, classDays, setClassDays }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
-          height: "36px",
+          height: "48px",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          gap: "10px",
           padding: "0 12px",
-          fontSize: "0.875rem",
+          fontSize: "1rem",
           fontWeight: "500",
           color: "hsl(var(--foreground))",
           backgroundColor: "white",
@@ -84,7 +84,7 @@ export default function DaySelector({ isBebesOn, classDays, setClassDays }) {
           e.currentTarget.style.color = "hsl(var(--foreground))";
         }}
       >
-        <CalendarDays size={16} />
+        <CalendarDays size={20} />
         <span style={{ display: window.innerWidth >= 1024 ? "inline" : "none" }}>Dias da Semana</span>
       </button>
 
