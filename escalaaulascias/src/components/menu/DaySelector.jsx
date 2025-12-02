@@ -1,14 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CalendarDays, ChevronRight } from "lucide-react";
 
-export default function DaySelector({ isBebesOn }) {
-  const [classDays, setClassDays] = useState({
-    Bebês: 0,
-    Crianças: 0,
-    Intermediários: 0,
-    Adolescentes: 0,
-  });
-
+export default function DaySelector({ isBebesOn, classDays, setClassDays }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedClass, setSelectedClass] = useState(null);
   const [subMenuPosition, setSubMenuPosition] = useState({ top: 0, left: 0 });

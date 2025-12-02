@@ -5,7 +5,15 @@ import DaySelector from "../components/menu/DaySelector";
 import DownloadButton from "../components/menu/DownloadButton";
 import BabyToggleButton from "../components/menu/BabyToggleButton";
 
-export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSelecionada, setDataSelecionada }) {
+export default function PageHeader({
+  isBebesOn,
+  setIsBebesOn,
+  onGerarPdf,
+  dataSelecionada,
+  setDataSelecionada,
+  classDays,
+  setClassDays,
+}) {
   const meses = [
     "Janeiro",
     "Fevereiro",
@@ -231,7 +239,7 @@ export default function PageHeader({ isBebesOn, setIsBebesOn, onGerarPdf, dataSe
             justifyContent: { xs: "space-between", sm: "flex-start" },
           }}
         >
-          <DaySelector isBebesOn={isBebesOn} />
+          <DaySelector isBebesOn={isBebesOn} classDays={classDays} setClassDays={setClassDays} />
           <BabyToggleButton isActive={isBebesOn} onChange={setIsBebesOn} label="Bebês" />
           <DownloadButton onClick={handleGerarPdf} label="Baixar PDF" />
         </Box>

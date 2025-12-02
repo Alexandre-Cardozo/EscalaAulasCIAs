@@ -177,7 +177,7 @@ export default function EscalaTable({
                     <TableCell sx={{ p: 1 }}>
                       <InputBase
                         fullWidth
-                        placeholder="Nome..."
+                        placeholder="Nome"
                         value={nomesTabela[index]?.[0] ?? ""}
                         onChange={(e) => onChangeNome?.(index, 0, e.target.value.slice(0, 20))}
                         sx={inputStyle}
@@ -189,7 +189,7 @@ export default function EscalaTable({
                       <TableCell sx={{ p: 1 }}>
                         <InputBase
                           fullWidth
-                          placeholder="Nome..."
+                          placeholder="Nome"
                           value={nomesTabela[index]?.[1] ?? ""}
                           onChange={(e) => onChangeNome?.(index, 1, e.target.value.slice(0, 20))}
                           sx={inputStyle}

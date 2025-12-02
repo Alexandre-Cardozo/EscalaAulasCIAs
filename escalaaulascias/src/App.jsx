@@ -18,6 +18,13 @@ export default function App() {
 
   const [isBebesOn, setIsBebesOn] = usePersistentState("isBebesOn", true);
 
+  const [classDays, setClassDays] = usePersistentState("classDays", {
+    Bebês: 0,
+    Crianças: 0,
+    Intermediários: 0,
+    Adolescentes: 0,
+  });
+
   const [nomesBebes, setNomesBebes] = usePersistentState(
     "nomesBebes",
     Array.from({ length: 5 }, () => ["", ""])
@@ -56,7 +63,12 @@ export default function App() {
   /* -----------------------------
    * Dias das Aulas  (não persistente)
    * ----------------------------- */
-  const [diasAulas, setDiasAulas] = useState([]);
+  const [diasAulas, setDiasAulas] = useState({
+    Bebês: [],
+    Crianças: [],
+    Intermediários: [],
+    Adolescentes: [],
+  });
   const [diasAulasPdf, setDiasAulasPdf] = useState([]);
 
   /* -----------------------------
@@ -78,23 +90,48 @@ export default function App() {
     // Atualiza o ref com o mês e ano atuais
     prevMonthYear.current = { month: mes, year: ano };
 
-    const novosDiasAulas = [];
-    const diasNoMes = getDaysInMonth(dataSelecionada);
+    const generateClassDays = (selectedDayOfWeek) => {
+      const days = [];
+      const diasNoMes = getDaysInMonth(dataSelecionada);
 
-    for (let dia = 1; dia <= diasNoMes; dia++) {
-      const dataAtual = new Date(ano, mes, dia);
-      if (dataAtual.getDay() === 0) {
-        novosDiasAulas.push(format(dataAtual, "dd/MM/yyyy"));
+      for (let dia = 1; dia <= diasNoMes; dia++) {
+        const dataAtual = new Date(ano, mes, dia);
+        if (dataAtual.getDay() === selectedDayOfWeek) {
+          days.push(format(dataAtual, "dd/MM/yyyy"));
+        }
       }
-    }
+      return days;
+    };
 
-    setDiasAulas(novosDiasAulas);
+    const novosDiasAulasBebes = isBebesOn ? generateClassDays(classDays.Bebês) : [];
+    const novosDiasAulasCriancas = generateClassDays(classDays.Crianças);
+    const novosDiasAulasIntermediarios = generateClassDays(classDays.Intermediários);
+    const novosDiasAulasAdolescentes = generateClassDays(classDays.Adolescentes);
+
+    setDiasAulas({
+      Bebês: novosDiasAulasBebes,
+      Crianças: novosDiasAulasCriancas,
+      Intermediários: novosDiasAulasIntermediarios,
+      Adolescentes: novosDiasAulasAdolescentes,
+    });
 
     // Completar até 5 posições para PDF
-    const pdf = [...novosDiasAulas];
-    while (pdf.length < 5) pdf.push("");
-    setDiasAulasPdf(pdf);
-  }, [dataSelecionada]);
+    const pdfBebes = [...novosDiasAulasBebes];
+    while (pdfBebes.length < 5) pdfBebes.push("");
+    const pdfCriancas = [...novosDiasAulasCriancas];
+    while (pdfCriancas.length < 5) pdfCriancas.push("");
+    const pdfIntermediarios = [...novosDiasAulasIntermediarios];
+    while (pdfIntermediarios.length < 5) pdfIntermediarios.push("");
+    const pdfAdolescentes = [...novosDiasAulasAdolescentes];
+    while (pdfAdolescentes.length < 5) pdfAdolescentes.push("");
+
+    setDiasAulasPdf({
+      Bebês: pdfBebes,
+      Crianças: pdfCriancas,
+      Intermediarios: pdfIntermediarios,
+      Adolescentes: pdfAdolescentes,
+    });
+  }, [dataSelecionada, isBebesOn, classDays]);
 
   /* -----------------------------
    * Handler para atualizar nomes ao mudar input
@@ -120,7 +157,10 @@ export default function App() {
       await gerarPDF(
         isBebesOn,
         dataSelecionada,
-        diasAulasPdf,
+        diasAulasPdf.Bebês,
+        diasAulasPdf.Crianças,
+        diasAulasPdf.Intermediarios,
+        diasAulasPdf.Adolescentes,
         nomesBebes,
         nomesCriancas,
         nomesIntermediarios,
@@ -154,11 +194,13 @@ export default function App() {
         isBebesOn={isBebesOn}
         setIsBebesOn={setIsBebesOn}
         onGerarPdf={handleGerarPdfRequest}
+        classDays={classDays}
+        setClassDays={setClassDays}
       />
 
       {isBebesOn && (
         <EscalaTable
-          diasAulas={diasAulas}
+          diasAulas={diasAulas.Bebês}
           cor="verde"
           titulo="Bebês"
           variant="bebes"
@@ -168,7 +210,7 @@ export default function App() {
       )}
 
       <EscalaTable
-        diasAulas={diasAulas}
+        diasAulas={diasAulas.Crianças}
         cor="vermelho"
         titulo="Crianças"
         variant="padrao"
@@ -177,7 +219,7 @@ export default function App() {
       />
 
       <EscalaTable
-        diasAulas={diasAulas}
+        diasAulas={diasAulas.Intermediários}
         cor="azul"
         titulo="Intermediários"
         variant="padrao"
@@ -186,7 +228,7 @@ export default function App() {
       />
 
       <EscalaTable
-        diasAulas={diasAulas}
+        diasAulas={diasAulas.Adolescentes}
         cor="amarelo"
         titulo="Adolescentes"
         variant="padrao"
