@@ -19,31 +19,31 @@ body {
   -webkit-text-size-adjust: 100%;
 
   /* Verde */
-  --section-green: 142 76% 36%;
-  --section-green-light: 142 30% 90%; /* Ajustado para CLARO */
+  --section-green: 142 76% 36%; /* #31824F */
+  --section-green-light: 142 30% 90%; /* #E0F2E6 */
 
   /* Vermelho */
-  --section-red: 354 70% 54%;
-  --section-red-light: 354 30% 90%; /* Ajustado para CLARO */
+  --section-red: 354 70% 54%; /* #E04B60 */
+  --section-red-light: 354 30% 90%; /* #F2E0E2 */
 
   /* Azul (Padrão) */
-  --section-blue: 217 91% 60%;
-  --section-blue-light: 217 30% 90%; /* Ajustado para CLARO */
+  --section-blue: 217 91% 60%; /* #2196F3 */
+  --section-blue-light: 217 30% 90%; /* #E0E8F2 */
 
   /* Roxo */
-  --section-purple: 262 83% 58%;
-  --section-purple-light: 262 30% 90%; /* Ajustado para CLARO */
+  --section-purple: 262 83% 58%; /* #8E24AA */
+  --section-purple-light: 262 30% 90%; /* #E8E0F2 */
 
   /* Amarelo */
-  --section-yellow: 45 93% 47%;
-  --section-yellow-light: 45 30% 90%; /* Ajustado para CLARO */
+  --section-yellow: 45 93% 47%; /* #FBC02D */
+  --section-yellow-light: 45 30% 90%; /* #F2EBE0 */
 
   /* Variáveis para o componente de dropdown */
-  --foreground: 210 11% 15%; /* Cor do texto principal */
-  --border: 214 32% 91%; /* Cor das bordas */
-  --accent: 210 65% 90%; /* Cor de fundo hover */
-  --primary: 210 79% 46%; /* Cor primária (azul) */
-  --muted-foreground: 215 16% 47%; /* Cor de texto secundário */
+  --foreground: 210 11% 15%; /* #24292E */
+  --border: 214 32% 91%; /* #E2E8F0 */
+  --accent: 210 65% 90%; /* #D9E6F2 */
+  --primary: 210 79% 46%; /* #2196F3 */
+  --muted-foreground: 215 16% 47%; /* #6C7A89 */
 
   /* Download Button */
   .download-button {

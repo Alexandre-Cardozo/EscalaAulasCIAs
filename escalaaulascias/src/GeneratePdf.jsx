@@ -169,9 +169,13 @@ export async function gerarPDF(
   const page = pdfDoc.getPages()[0];
 
   // Escreve o informativo da data da escala
+  const mesFormatado = dataSelecionada.toLocaleDateString("pt-BR", { month: "long" });
+  const mesCapitalizado = mesFormatado.charAt(0).toUpperCase() + mesFormatado.slice(1);
+  const textoMesAno = mesCapitalizado + " de " + getYear(dataSelecionada);
+  const larguraTextoMesAno = font.widthOfTextAtSize(textoMesAno, 15);
   page.drawText(
-    dataSelecionada.toLocaleDateString("pt-BR", { month: "long" }).toUpperCase() + " de " + getYear(dataSelecionada),
-    { x: 19, y: isBebesOn ? 740 : 560, size: 15, font }
+    textoMesAno,
+    { x: 575 - larguraTextoMesAno, y: isBebesOn ? 745 : 565, size: 15, font }
   );
 
   isBebesOn
@@ -209,8 +213,8 @@ export async function gerarPDF(
   a.download = "escala_cias_" + getYear(dataSelecionada) + "_" + getMonth(dataSelecionada) + ".pdf";
   a.click();
 
-  /* // Abre o PDF em uma nova aba para pré-visualização
-  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  // Abre o PDF em uma nova aba para pré-visualização
+  /* const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
   window.open(url, "_blank"); */
 }
