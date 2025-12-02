@@ -39,7 +39,7 @@ export default function PageHeader({
       <Toolbar
         disableGutters
         sx={{
-          px: { xs: 1.5, sm: 3 },
+          px: 1.25,
           minHeight: 64,
           display: "flex",
           flexWrap: "wrap",
@@ -54,10 +54,9 @@ export default function PageHeader({
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: { xs: 1, sm: 3 },
             flexWrap: "nowrap",
-            width: { xs: "100%", sm: "auto" },
-            justifyContent: { xs: "space-between", sm: "flex-start" },
+            width: { xs: "100%", sm: "auto", md: "auto" },
+            justifyContent: "space-between",
           }}
         >
           <LogoSection logo={logo} />
@@ -69,13 +68,21 @@ export default function PageHeader({
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 1.5,
-            width: { xs: "100%", sm: "auto" },
-            justifyContent: { xs: "space-between", sm: "flex-start" },
+            gap: 1.25,
+            width: { xs: "100%", sm: "auto", md: "auto" },
+            justifyContent: "space-between",
           }}
         >
-          <DaySelector isBebesOn={isBebesOn} classDays={classDays} setClassDays={setClassDays} />
-          <BabyToggleButton isActive={isBebesOn} onChange={setIsBebesOn} label="Bebês" />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.25,
+            }}
+          >
+            <DaySelector isBebesOn={isBebesOn} classDays={classDays} setClassDays={setClassDays} />
+            <BabyToggleButton isActive={isBebesOn} onChange={setIsBebesOn} label="Bebês" />
+          </Box>
           <DownloadButton onClick={handleGerarPdf} label="Baixar PDF" />
         </Box>
       </Toolbar>

@@ -18,15 +18,15 @@ export default function DateSelectors({ dataSelecionada, setDataSelecionada, mes
   return (
     <Box
       sx={{
-        display: { xs: "none", sm: "flex" },
+        display: "flex",
         alignItems: "center",
         gap: { xs: 1, md: 2 },
         backgroundColor: "rgba(241, 245, 249, 0.5)", // slate-100/50
         padding: "6px",
         borderRadius: "9999px",
         border: "1px solid rgba(180, 180, 180, 0.7)", // slate-200/60
-        }}
-      >
+      }}
+    >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         {/* Month Select */}
         <FormControl

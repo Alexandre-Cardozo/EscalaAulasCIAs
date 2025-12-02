@@ -8,6 +8,7 @@ export default function LogoSection({ logo }) {
         display: "flex",
         alignItems: "center",
         gap: 1.5,
+        paddingRight: "12px",
       }}
     >
       <Box
