@@ -1,4 +1,4 @@
-import { TextField, InputLabel, FormControl, NativeSelect, AppBar, Toolbar, Box, Typography } from "@mui/material";
+import { AppBar, Toolbar, Box } from "@mui/material";
 import logo from "../assets/logo.jpeg";
 import DaySelector from "../components/menu/DaySelector";
 import DownloadButton from "../components/menu/DownloadButton";

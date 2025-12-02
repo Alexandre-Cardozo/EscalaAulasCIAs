@@ -1,4 +1,3 @@
-import React from "react";
 import { Baby } from "lucide-react";
 
 export default function BabyToggleButton({ isActive, onChange, label = "Bebês" }) {

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Download } from 'lucide-react';
+import { Download } from "lucide-react";
 
 export default function DownloadButton({ onClick, label = "Baixar PDF" }) {
   return (

@@ -201,16 +201,16 @@ export async function gerarPDF(
   //Gera o PDF final
   const pdfBytes = await pdfDoc.save();
 
-  /* // Faz o download no navegador
+  // Faz o download no navegador
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = "escala_cias_" + getYear(dataSelecionada) + "_" + getMonth(dataSelecionada) + ".pdf";
-  a.click(); */
+  a.click();
 
-  // Abre o PDF em uma nova aba para pré-visualização
+  /* // Abre o PDF em uma nova aba para pré-visualização
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
-  window.open(url, "_blank");
+  window.open(url, "_blank"); */
 }
