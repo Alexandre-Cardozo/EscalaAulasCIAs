@@ -173,10 +173,7 @@ export async function gerarPDF(
   const mesCapitalizado = mesFormatado.charAt(0).toUpperCase() + mesFormatado.slice(1);
   const textoMesAno = mesCapitalizado + " de " + getYear(dataSelecionada);
   const larguraTextoMesAno = font.widthOfTextAtSize(textoMesAno, 15);
-  page.drawText(
-    textoMesAno,
-    { x: 575 - larguraTextoMesAno, y: isBebesOn ? 745 : 565, size: 15, font }
-  );
+  page.drawText(textoMesAno, { x: 575 - larguraTextoMesAno, y: isBebesOn ? 745 : 565, size: 15, font });
 
   isBebesOn
     ? escreveTemplateBebes(
@@ -210,7 +207,7 @@ export async function gerarPDF(
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "escala_cias_" + getYear(dataSelecionada) + "_" + getMonth(dataSelecionada) + ".pdf";
+  a.download = "escala_cias_" + getYear(dataSelecionada) + "_" + (getMonth(dataSelecionada) + 1) + ".pdf";
   a.click();
 
   // Abre o PDF em uma nova aba para pré-visualização
